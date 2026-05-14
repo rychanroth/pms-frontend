@@ -16,11 +16,29 @@ class DjangoApiService
 
     public function login($username, $password)
     {
-        $response = Http::post("{$this->baseUrl}/login/", [
+        return Http::post("{$this->baseUrl}/login/", [
             'username' => $username,
             'password' => $password,
         ]);
-
-        return $response;
     }
+
+    private function withToken()
+    {
+        $token = session('api_token');
+        return Http::withHeaders([
+            'Authorization ' => 'Token ' . $token
+        ]);
+    }
+
+    public function get($endpoint)
+    {
+        return $this->withToken()->get("{$this->baseUrl}/{$endpoint}");
+    }
+
+    public function post($endpoint, $data)
+    {
+        return $this->withToken()->post("{$this->baseUrl}/{$endpoint}", $data);
+    }
+
+    
 }
