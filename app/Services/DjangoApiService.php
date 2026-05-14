@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class DjangoApiService
 {
-    protected $baseUrl;
+    public $baseUrl;
 
     public function __construct()
     {
