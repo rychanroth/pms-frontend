@@ -15,7 +15,7 @@
             <a href="#" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Product Types</a>
             <a href="#" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Categories</a>
             <a href="#" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Products</a>
-            <a href="#" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Suppliers</a>
+            <a href="{{ route('suppliers.index') }}" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Suppliers</a>
             <a href="#" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Stock Movements</a>
         @endif
 
@@ -30,7 +30,7 @@
         <!-- CASHIER MENUS -->
         @if(session('user_role') === 'cashier')
             <p class="px-3 pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase">Point of Sale</p>
-            <a href="#" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100 bg-blue-50 text-blue-700 font-medium">New Sale (POS)</a>
+            <a href="#" class="block px-3 py-2 rounded-md text-sm hover:bg-gray-100 bg-blue-50 text-blue-700 font-medium">New Sale (POS)</a>
             <a href="#" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Sales History</a>
         @endif
 

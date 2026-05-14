@@ -26,7 +26,7 @@ class DjangoApiService
     {
         $token = session('api_token');
         return Http::withHeaders([
-            'Authorization ' => 'Token ' . $token
+            'Authorization' => 'Token ' . $token
         ]);
     }
 
@@ -39,6 +39,4 @@ class DjangoApiService
     {
         return $this->withToken()->post("{$this->baseUrl}/{$endpoint}", $data);
     }
-
-    
 }
