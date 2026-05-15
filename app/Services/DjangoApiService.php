@@ -39,4 +39,9 @@ class DjangoApiService
     {
         return $this->withToken()->post("{$this->baseUrl}/{$endpoint}", $data);
     }
+
+    public function put($endpoint, $data)
+    {
+        return $this->withToken()->put("{$this->baseUrl}/{$endpoint}", $data);
+    }
 }
