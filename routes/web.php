@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
@@ -21,5 +22,7 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('suppliers', SupplierController::class);
 Route::resource('product-types', ProductTypeController::class);
+Route::get('/categories/tree', [CategoryController::class, 'getTree'])->name('categories.tree');
+Route::resource('categories', CategoryController::class);
 
 require __DIR__.'/auth.php';

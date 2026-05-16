@@ -13,11 +13,7 @@ class SupplierController extends Controller
         $api = new DjangoApiService();
         $response = $api->get('suppliers/');
 
-        if ($response->successful()) {
-            $suppliers = $response->json();
-        } else {
-            $suppliers = [];
-        }
+        $suppliers = $response->successful() ? $response->json() : [];
 
         return view('suppliers.index', compact('suppliers'));
     }

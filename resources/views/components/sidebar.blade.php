@@ -13,7 +13,7 @@
         @if(in_array(session('user_role'), ['admin', 'pharmacist']))
             <p class="px-3 pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase">Inventory</p>
             <a href="{{ route('product-types.index') }}" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Product Types</a>
-            <a href="#" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Categories</a>
+            <a href="{{ route('categories.index') }}" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Categories</a>
             <a href="#" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Products</a>
             <a href="{{ route('suppliers.index') }}" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Suppliers</a>
             <a href="#" class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Stock Movements</a>
