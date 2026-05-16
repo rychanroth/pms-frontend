@@ -18,7 +18,7 @@
                     <tr>
                         <td class="px-6 py-4 font-medium">{{ $cat['name'] }}</td>
                         <td class="px-6 py-4 text-gray-500">{{ $cat['product_type']['name'] ?? 'N/A' }}</td>
-                        <td class="px-6 py-4 text-gray-500">{{ $cat['parent']['name'] ?? 'Root' }}</td>
+                        <td class="px-6 py-4 text-gray-500">{{ $cat['parent_name'] ?? 'Root' }}</td>
                         <td class="px-6 py-4">
                             <a href="{{ route('categories.edit', $cat['id']) }}" class="text-blue-600 hover:underline text-sm">Edit</a>
                             <form action="{{ route('categories.destroy', $cat['id']) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('Delete?')">
