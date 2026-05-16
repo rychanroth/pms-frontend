@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Services\DjangoApiService;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use App\Traits\InteractsWithApi;
 
 class ProductTypeController extends Controller
 {
+    use InteractsWithApi;
     /**
      * Display a listing of the resource.
      */
@@ -24,7 +25,7 @@ class ProductTypeController extends Controller
      */
     public function create()
     {
-        return view('product-types.create');
+        return view('product-types.form');
     }
 
     /**
@@ -33,31 +34,11 @@ class ProductTypeController extends Controller
     public function store(Request $request)
     {
         $api = new DjangoApiService();
-
-        $response = $api->post('product-types/', $request->only('name', 'description', 'requires_prescription', 'requires_expiration'));
-
-        if ($response->successful()) {
-            return Redirect::route('product-types.index')->with('success', 'Proudct Type created!');
-        }
-
-        if ($response->status() === 400) {
-            $errors = $response->json(); // Example: {"name": ["This field is required."]}
-
-            // Loop through Django's JSON errors and flash them to Laravel's session
-            foreach ($errors as $field => $messages) {
-                foreach ($messages as $message) {
-                    // This feeds the @error('name') directive in our Blade form!
-                    $request->session()->flash("errors.$field", $message);
-                }
-            }
-
-            // Flash the old input so the form isn't empty
-            $request->session()->flash('_old_input', $request->all());
-
-            return Redirect::route('product-types.create')->withErrors($errors);
-        }
-
-        return Redirect::route('product-types.create')->with('error', 'Failed to connect to API.');
+        $payload = $request->only('name', 'description');
+        $payload['requires_prescription'] = $request->has('requires_prescription');
+        $payload['requires_expiration'] = $request->has('requires_expiration');
+        $response = $api->post("product-types/", $payload);
+        return $this->handleApiSave($response, 'product-types.index', $request);
     }
 
     /**
@@ -71,24 +52,33 @@ class ProductTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $api = new DjangoApiService();
+        $productType = $api->get("product-types/{$id}/")->json();
+        return view('product-types.form', compact('productType'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $api = new DjangoApiService();
+        $payload = $request->only('name', 'description');
+        $payload['requires_prescription'] = $request->has('requires_prescription');
+        $payload['requires_expiration'] = $request->has('requires_expiration');
+        $response = $api->put("product-types/{$id}/", $payload);
+        return $this->handleApiSave($response, 'product-types.index', $request);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $api = new DjangoApiService();
+        $api->withToken()->delete("{$api->baseUrl}/product-types/{$id}/");
+        return redirect()->route('product-types.index')->with('success', 'Deleted.');
     }
 }

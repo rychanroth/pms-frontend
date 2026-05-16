@@ -22,7 +22,7 @@ class DjangoApiService
         ]);
     }
 
-    private function withToken()
+    public function withToken()
     {
         $token = session('api_token');
         return Http::withHeaders([
