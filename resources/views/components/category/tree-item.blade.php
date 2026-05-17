@@ -1,11 +1,11 @@
-@props(['node', 'depth' => 0])
+@props(['node'])
 
 <option value="{{ $node['id'] }}">
-    {{ str_repeat('--', $depth) }} {{ $node['name'] }}
+    {{ str_repeat('--', $node['depth']) }} {{ $node['name'] }}
 </option>
 
 @if(!empty($node['children']))
     @foreach($node['children'] as $child)
-        <x-category.tree-item :node="$child" :depth="$depth + 1" />
+        <x-category.tree-item :node="$child" />
     @endforeach
 @endif
